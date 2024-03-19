@@ -1,17 +1,16 @@
+import { useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 
-import { useAppState } from "./app"
-import { H1, PageContainer } from "./utilities"
-import { AccordionFrameItem } from "./projectPage"
+import { useAppState } from "../appState"
 import {
   connectWallet,
   deployFrameHandlers,
   initializeProcess,
 } from "../processClient"
-import { useState } from "react"
+import { H1, PageContainer } from "./utilities"
+import { AccordionFrameItem } from "./projectPage"
 
-Component.displayName = "PublishPage"
-export function Component() {
+export function PublishPage() {
   const navigate = useNavigate()
   const params = useParams()
   const appState = useAppState()
@@ -45,6 +44,7 @@ export function Component() {
       project.id = processId
       project.deployed = true
       navigate("/project/" + project.id)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       setError(e.message)
       setPublishing(false)

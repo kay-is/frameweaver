@@ -1,18 +1,17 @@
-import { FramePreview } from "./framePreview"
+import { useParams } from "react-router-dom"
 import { useSignals } from "@preact/signals-react/runtime"
 
-import { useParams } from "react-router-dom"
-import type {
+import {
   FrameImageSpec,
   FrameProjectSpec,
   GuiFrameButtonSpec,
   GuiFrameSpec,
+  useAppState,
 } from "../appState"
+import { FramePreview } from "./framePreview"
 import { PageContainer } from "./utilities"
-import { useAppState } from "./app"
 
-Component.displayName = "EditorPage"
-export function Component() {
+export function EditorPage() {
   const params = useParams()
   const appState = useAppState()
 
@@ -25,7 +24,7 @@ export function Component() {
       </PageContainer>
     )
 
-  let frame =
+  const frame =
     project.initialFrame.id === params.frameId
       ? project.initialFrame
       : project.frames.find((f) => f.id === params.frameId)
@@ -143,7 +142,7 @@ const FrameButtonItem = (props: FrameButtonItemProps) => {
     (p) => p.id === params.projectId
   ) as FrameProjectSpec
 
-  const frames = [...project?.frames, project.initialFrame]
+  const frames = [...project.frames, project.initialFrame]
 
   const disabled = props.button.action === "disabled"
 
@@ -197,7 +196,7 @@ const FrameButtonItem = (props: FrameButtonItemProps) => {
             type="text"
             className="input input-bordered w-full"
             placeholder="Target URL"
-            //@ts-expect-error
+            //@ts-expect-error button has target
             onChange={(e) => (props.button.target = e.target.value)}
           />
         )}
@@ -205,7 +204,7 @@ const FrameButtonItem = (props: FrameButtonItemProps) => {
           <select
             value={props.button.target}
             className="select select-bordered w-full"
-            //@ts-expect-error
+            //@ts-expect-error button has target
             onChange={(e) => (props.button.target = e.target.value)}
           >
             {frames.map((frame) => (

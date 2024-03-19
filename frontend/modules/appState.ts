@@ -1,5 +1,7 @@
 import { effect } from "@preact/signals-react"
+import { useSignals } from "@preact/signals-react/runtime"
 import { deepSignal } from "deepsignal/react"
+import { createContext, useContext } from "react"
 
 export type CodeFrameSpec = {
   type: "code"
@@ -85,4 +87,13 @@ export const createAppState = (stateId: string) => {
   })
 
   return appState
+}
+
+export const AppStateContext = createContext(
+  {} as ReturnType<typeof createAppState>
+)
+
+export const useAppState = () => {
+  useSignals()
+  return useContext(AppStateContext)
 }

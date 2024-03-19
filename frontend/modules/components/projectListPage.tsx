@@ -1,11 +1,9 @@
 import { Link, useNavigate } from "react-router-dom"
 
-import type { FrameProjectSpec } from "../appState"
-import { useAppState } from "./app"
+import { FrameProjectSpec, useAppState } from "../appState"
 import { H1, PageContainer } from "./utilities"
 
-Component.displayName = "ProjectListPage"
-export function Component() {
+export function ProjectListPage() {
   const navigate = useNavigate()
   const appState = useAppState()
 

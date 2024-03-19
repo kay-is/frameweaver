@@ -7,35 +7,38 @@ const SU_ADDRESS = "TZ7o7SIZ06ZEJ14lXwVtng1EtSx60QkPy-kh-kdAXog"
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms))
 
-//@ts-expect-error
+//@ts-expect-error Arweave wallet exists
 let signer = createDataItemSigner(globalThis.arweaveWallet)
 
-const retry = (f: Function, times = 5) =>
-  new Promise(async (resolve, reject) => {
-    let errors = []
-    for (let retries = 1; retries <= times; ++retries) {
-      try {
-        await f()
-        resolve(null)
-        break
-      } catch (e) {
-        errors.push(e)
-        const ms = 10000 * retries
-        console.log("Retrying in " + ms / 1000 + "sec...")
-        await sleep(ms)
+const retry = (f: () => void, times = 5) =>
+  new Promise((resolve, reject) => {
+    const wrapper = async () => {
+      const errors = []
+      for (let retries = 1; retries <= times; ++retries) {
+        try {
+          await f()
+          resolve(null)
+          break
+        } catch (e) {
+          errors.push(e)
+          const ms = 10000 * retries
+          console.log("Retrying in " + ms / 1000 + "sec...")
+          await sleep(ms)
+        }
       }
+      reject(errors)
     }
-    reject(errors)
+    wrapper()
   })
 
 export const connectWallet = async () => {
-  //@ts-expect-error
+  //@ts-expect-error arweaveWallet exists
   await globalThis.arweaveWallet.connect([
     "ACCESS_ADDRESS",
     "ACCESS_ALL_ADDRESSES",
     "SIGN_TRANSACTION",
   ])
-  //@ts-expect-error
+  //@ts-expect-error arweaveWallet exists
   signer = createDataItemSigner(globalThis.arweaveWallet)
 }
 

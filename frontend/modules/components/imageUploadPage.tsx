@@ -1,13 +1,12 @@
 import { useRef, useState } from "react"
-import { TurboFactory } from "@ardrive/turbo-sdk/web"
-import arweave from "arweave"
-
-import { H1, PageContainer } from "./utilities"
-import { useAppState } from "./app"
 import { useNavigate } from "react-router-dom"
+import arweave from "arweave"
+import { TurboFactory } from "@ardrive/turbo-sdk/web"
 
-Component.displayName = "ImageUploadPage"
-export function Component() {
+import { useAppState } from "../appState"
+import { H1, PageContainer } from "./utilities"
+
+export function ImageUploadPage() {
   const navigate = useNavigate()
   const appState = useAppState()
   const [uploading, setUploading] = useState(false)
@@ -70,7 +69,7 @@ export function Component() {
               name="aspect_ratio"
               className="select select-bordered w-full"
               value={aspectRatio}
-              //@ts-expect-error
+              //@ts-expect-error target has value
               onChange={(e) => setAspectRatio(e.target.value)}
             >
               <option value="1.91:1">1.91:1</option>

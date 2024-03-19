@@ -1,13 +1,17 @@
 import { Link, useParams } from "react-router-dom"
 import { useSignals } from "@preact/signals-react/runtime"
 
-import type { FrameImageSpec, FrameProjectSpec, FrameSpec } from "../appState"
+import {
+  FrameImageSpec,
+  FrameProjectSpec,
+  FrameSpec,
+  GuiFrameSpec,
+  useAppState,
+} from "../appState"
 import { FramePreview } from "./framePreview"
-import { useAppState } from "./app"
 import { PageContainer } from "./utilities"
 
-Component.displayName = "ProjectPage"
-export function Component() {
+export function ProjectPage() {
   const params = useParams()
   const appState = useAppState()
 
@@ -15,7 +19,7 @@ export function Component() {
 
   return (
     <PageContainer>
-      {!!project ? (
+      {project ? (
         <FrameList project={project} images={appState.images} />
       ) : (
         <p>Project not found!</p>
@@ -93,7 +97,7 @@ const FrameList = (props: ProjectProps) => {
       </div>
       <div className="join join-vertical w-full mb-20">
         <AccordionFrameItem frame={props.project.initialFrame} editable open />
-        {props.project.frames.map((frame: any) => (
+        {props.project.frames.map((frame: GuiFrameSpec) => (
           <AccordionFrameItem
             key={frame.id}
             editable

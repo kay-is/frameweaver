@@ -1,10 +1,9 @@
 import { PropsWithChildren } from "react"
 import { Link, useLocation, useParams } from "react-router-dom"
 
-import type { FrameSpec } from "../appState"
-import { useAppState } from "./app"
+import { FrameSpec, useAppState } from "../appState"
 
-export function H1(props: any) {
+export function H1(props: PropsWithChildren) {
   return <h1 className="text-lg font-bold mb-2" {...props} />
 }
 

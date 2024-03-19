@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom"
 import { PageContainer } from "./utilities"
 
-Component.displayName = "LandingPage"
-export function Component() {
+export function LandingPage() {
   return (
     <PageContainer>
       <div className="hero bg-base-200">

@@ -1,0 +1,23 @@
+{
+  "name": "permaframes-backend",
+  "private": true,
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "type": "module",
+  "scripts": {
+    "start": "tsx modules/index.ts",
+    "test": "tsx tests/ao.client.ts"
+  },
+  "author": "Kay Plößer",
+  "license": "GPL-3.0-only",
+  "devDependencies": {
+    "@types/node": "^20.11.27",
+    "tsx": "^4.7.1"
+  },
+  "dependencies": {
+    "@fastify/type-provider-typebox": "^4.0.0",
+    "@permaweb/aoconnect": "^0.0.48",
+    "fastify": "^4.26.2"
+  }
+}

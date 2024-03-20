@@ -2,11 +2,7 @@ import { useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 
 import { useAppState } from "../appState"
-import {
-  connectWallet,
-  deployFrameHandlers,
-  initializeProcess,
-} from "../processClient"
+import * as aoClient from "../processClient"
 import { H1, PageContainer } from "./utilities"
 import { AccordionFrameItem } from "./projectPage"
 
@@ -15,7 +11,6 @@ export function PublishPage() {
   const params = useParams()
   const appState = useAppState()
   const [publishing, setPublishing] = useState(false)
-  const [error, setError] = useState("")
 
   const project = appState.projects.find((p) => p.id === params.projectId)
 
@@ -32,23 +27,10 @@ export function PublishPage() {
 
   const handlePublish = async () => {
     setPublishing(true)
-    setError("")
-    await connectWallet()
-
-    try {
-      const processId = await initializeProcess()
-      await deployFrameHandlers(processId, [
-        ...project.frames,
-        project.initialFrame,
-      ])
-      project.id = processId
-      project.deployed = true
-      navigate("/project/" + project.id)
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (e: any) {
-      setError(e.message)
-      setPublishing(false)
-    }
+    await aoClient.connectWallet()
+    await aoClient.updateProject(project)
+    project.deployed = Date.now()
+    navigate("/project/" + project.id)
   }
 
   return (
@@ -73,13 +55,6 @@ export function PublishPage() {
           )}
         </button>
       </div>
-      {error !== "" && (
-        <div className="toast toast-top toast-end">
-          <div className="alert alert-error w-200">
-            <span>{error}</span>
-          </div>
-        </div>
-      )}
     </PageContainer>
   )
 }

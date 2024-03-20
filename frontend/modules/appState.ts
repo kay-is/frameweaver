@@ -54,12 +54,13 @@ export type FrameProjectSpec = {
   id: string
   name: string
   description: string
-  deployed: boolean
+  deployed: number
   initialFrame: GuiFrameSpec
   frames: GuiFrameSpec[]
 }
 
 export type AppState = {
+  wallet: any
   images: FrameImageSpec[]
   projects: FrameProjectSpec[]
 }

@@ -10,6 +10,8 @@ import {
 } from "../appState"
 import { FramePreview } from "./framePreview"
 import { PageContainer } from "./utilities"
+import { useEffect, useState } from "react"
+import { connectWallet } from "../processClient"
 
 export function ProjectPage() {
   const params = useParams()
@@ -32,8 +34,24 @@ interface ProjectProps {
   project: FrameProjectSpec
   images: FrameImageSpec[]
 }
+
+export const useWallet = () => {
+  const [wallet, setWallet] = useState<any>()
+  useEffect(() => {
+    const f = async () => {
+      const wallet = await connectWallet()
+      const address = await wallet.getActiveAddress()
+      setWallet(address)
+    }
+    f()
+  })
+  return wallet
+}
+
 const FrameList = (props: ProjectProps) => {
   useSignals()
+  const address = useWallet()
+
   const handleAddFrame = () => {
     return props.project.frames.push({
       id: "frame-" + Date.now(),
@@ -60,17 +78,19 @@ const FrameList = (props: ProjectProps) => {
   return (
     <div className="mx-5">
       <div className="form-control w-full">
-        <div className="label">
-          <span className="label-text font-bold">Deployment URL</span>
-        </div>
-        <input
-          type="text"
-          value={"http://localhost:3000/" + props.project.id}
-          className="input input-bordered w-full"
-          readOnly
-        />
-      </div>
-      <div className="form-control w-full">
+        {props.project.deployed > 0 && (
+          <a
+            href={`https://frameweaver.permaframes.cc/${address}/${props.project.id}`}
+            target="_blank"
+            style={{
+              fontWeight: "bold",
+              color: "white",
+              textDecoration: "underline",
+            }}
+          >
+            Deployment URL
+          </a>
+        )}
         <div className="label">
           <span className="label-text font-bold">Name</span>
         </div>

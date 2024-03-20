@@ -8,38 +8,46 @@ import { farcasterMessage } from "./messsage.types.js"
 const app = Fastify().withTypeProvider<TypeBoxTypeProvider>()
 
 app.get(
-  "/:processId",
+  "/:accountId/:projectId",
   {
     schema: {
       params: Type.Object({
-        processId: Type.String(),
+        accountId: Type.String(),
+        projectId: Type.String(),
       }),
     },
   },
   async ({ params }, reply) => {
     reply.type("text/html")
-    return await callFrameHandler(params.processId, "initial")
+    const frameHtml = await callFrameHandler(
+      params.accountId,
+      params.projectId,
+      "initial"
+    )
+    return JSON.parse(frameHtml)
   }
 )
 
-app.post(
-  "/:processId/:handlerId",
+app.all(
+  "/:accountId/:projectId/:frameId",
   {
     schema: {
-      body: farcasterMessage,
       params: Type.Object({
-        processId: Type.String(),
-        handlerId: Type.String(),
+        accountId: Type.String(),
+        projectId: Type.String(),
+        frameId: Type.String(),
       }),
     },
   },
-  async ({ body, params }, reply) => {
+  async ({ params }, reply) => {
     reply.type("text/html")
-    return await callFrameHandler(
-      params.processId,
-      params.handlerId,
-      body.untrustedData
+    console.log(params)
+    const frameHtml = await callFrameHandler(
+      params.accountId,
+      params.projectId,
+      params.frameId
     )
+    return JSON.parse(frameHtml)
   }
 )
 

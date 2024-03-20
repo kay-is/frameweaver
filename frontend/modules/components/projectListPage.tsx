@@ -2,8 +2,10 @@ import { Link, useNavigate } from "react-router-dom"
 
 import { FrameProjectSpec, useAppState } from "../appState"
 import { H1, PageContainer } from "./utilities"
+import { useWallet } from "./projectPage"
 
 export function ProjectListPage() {
+  const address = useWallet()
   const navigate = useNavigate()
   const appState = useAppState()
 
@@ -11,7 +13,7 @@ export function ProjectListPage() {
     const newProject: FrameProjectSpec = {
       id: "project-" + Date.now(),
       name: "",
-      deployed: false,
+      deployed: 0,
       description: "A new project comes with an intial frame.",
       initialFrame: {
         type: "gui",
@@ -67,13 +69,28 @@ export function ProjectListPage() {
               <div className="card-body">
                 <h2 className="card-title">
                   {project.name}
-                  <div className="badge badge-outline">
-                    {project.frames.length + 1} Frames
-                  </div>
-                  <div className="badge badge-outline">
-                    {project.deployed ? "Public" : "Local"}
-                  </div>
+                  {project.deployed !== 0 ? (
+                    <div className="badge badge-outline">
+                      {new Date(project.deployed).toLocaleDateString() + " - "}
+                      {new Date(project.deployed).toLocaleTimeString()}
+                    </div>
+                  ) : (
+                    <div className="badge badge-outline">Not Published</div>
+                  )}
                 </h2>
+                {project.deployed > 0 && (
+                  <a
+                    href={`https://frameweaver.permaframes.cc/${address}/${project.id}`}
+                    target="_blank"
+                    style={{
+                      fontWeight: "bold",
+                      color: "white",
+                      textDecoration: "underline",
+                    }}
+                  >
+                    Deployment URL
+                  </a>
+                )}
                 <p>{project.description}</p>
               </div>
 

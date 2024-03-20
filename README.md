@@ -2,4 +2,4 @@
 
 A AO powered Farcaster Frames Builder
 
-https://frameweaver.arweave.net
+https://frameweaver.arweave.dev

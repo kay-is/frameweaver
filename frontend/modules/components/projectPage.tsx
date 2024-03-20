@@ -80,11 +80,11 @@ const FrameList = (props: ProjectProps) => {
       <div className="form-control w-full">
         {props.project.deployed > 0 && (
           <a
-            href={`https://frameweaver.permaframes.cc/${address}/${props.project.id}`}
+            href={`https://frameweaver.fly.dev/${address}/${props.project.id}`}
             target="_blank"
             style={{
               fontWeight: "bold",
-              color: "white",
+              color: "black",
               textDecoration: "underline",
             }}
           >

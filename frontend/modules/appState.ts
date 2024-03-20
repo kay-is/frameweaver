@@ -85,6 +85,7 @@ export const createAppState = (stateId: string) => {
 
   effect(() => {
     localStorage.setItem(stateId, JSON.stringify(appState))
+    console.log(appState)
   })
 
   return appState

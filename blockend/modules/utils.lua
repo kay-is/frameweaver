@@ -55,7 +55,7 @@ local function h(tag, attributes, children)
   return html
 end
 
-function utils.renderFrame(frame)
+function utils.renderFrame(frame, accountId, projectId)
   local imageUrl = "https://arweave.net/" .. frame.image.id
   return h("html", {
     h("title", frame.name),
@@ -65,16 +65,25 @@ function utils.renderFrame(frame)
     h("meta", { property = "fc:frame:image:aspect_ratio", content = frame.image.aspectRatio }),
     h("meta", { property = "fc:frame", content = "vNext" }),
     utils.map(frame.buttons, function(button, i)
+      local target = button.target
+      if button.action == "post" then
+        target = "https://frameweaver.fly.dev/" .. accountId .. "/" .. projectId .. "/" .. button.target
+      end
+
       return {
         h("meta", { property = "fc:frame:button:" .. i, content = button.label }),
         h("meta", { property = "fc:frame:button:" .. i .. ":action", content = button.action }),
-        h("meta", { property = "fc:frame:button:" .. i .. ":target", content = button.target }),
+        h("meta", { property = "fc:frame:button:" .. i .. ":target", content = target }),
       }
     end),
     h("h1", frame.name),
     h("img", { src = imageUrl }),
     utils.map(frame.buttons, function(button)
-      return h("a", { href = button.target }, "Click me!")
+      local target = button.target
+      if button.action == "post" then
+        target = "https://frameweaver.fly.dev/" .. accountId .. "/" .. projectId .. "/" .. button.target
+      end
+      return h("a", { href = target }, "Click me!")
     end),
   })
 end

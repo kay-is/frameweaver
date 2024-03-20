@@ -12,12 +12,13 @@
   "author": "Kay Plößer",
   "license": "GPL-3.0-only",
   "devDependencies": {
-    "@types/node": "^20.11.27",
-    "tsx": "^4.7.1"
+    "@flydotio/dockerfile": "^0.5.3",
+    "@types/node": "^20.11.27"
   },
   "dependencies": {
     "@fastify/type-provider-typebox": "^4.0.0",
     "@permaweb/aoconnect": "^0.0.48",
-    "fastify": "^4.26.2"
+    "fastify": "^4.26.2",
+    "tsx": "^4.7.1"
   }
 }

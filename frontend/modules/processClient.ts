@@ -56,6 +56,7 @@ export const connectWallet = async () => {
 
 export const updateProject = async (project: FrameProjectSpec) => {
   console.log("Updating project...")
+  console.log(project)
   const data = await call("updateProject", project)
   project.deployed = true
   console.log("Done!")

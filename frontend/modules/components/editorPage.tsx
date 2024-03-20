@@ -204,8 +204,10 @@ const FrameButtonItem = (props: FrameButtonItemProps) => {
           <select
             value={props.button.target}
             className="select select-bordered w-full"
-            //@ts-expect-error button has target
-            onChange={(e) => (props.button.target = e.target.value)}
+            onChange={(e) => {
+              console.log(e.target.value)
+              props.button.target = e.target.value
+            }}
           >
             {frames.map((frame) => (
               <option value={frame.id} key={frame.id}>

@@ -80,11 +80,11 @@ export function ProjectListPage() {
                 </h2>
                 {project.deployed > 0 && (
                   <a
-                    href={`https://frameweaver.permaframes.cc/${address}/${project.id}`}
+                    href={`https://frameweaver.fly.dev/${address}/${project.id}`}
                     target="_blank"
                     style={{
                       fontWeight: "bold",
-                      color: "white",
+                      color: "black",
                       textDecoration: "underline",
                     }}
                   >

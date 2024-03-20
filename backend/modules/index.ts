@@ -3,7 +3,6 @@ import { TypeBoxTypeProvider } from "@fastify/type-provider-typebox"
 import { Type } from "@sinclair/typebox"
 
 import { callFrameHandler } from "./ao.client.js"
-import { farcasterMessage } from "./messsage.types.js"
 
 const app = Fastify().withTypeProvider<TypeBoxTypeProvider>()
 
@@ -52,7 +51,7 @@ app.all(
 )
 
 try {
-  await app.listen({ port: 3000 })
+  await app.listen({ host: "0.0.0.0", port: 3000 })
 } catch (err) {
   app.log.error(err)
   process.exit(1)

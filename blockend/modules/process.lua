@@ -71,7 +71,7 @@ server.addJsonHandler("renderFrame", function(from, data)
     project.frameViews[data.frameId] = views + 1
   end
 
-  return utils.renderFrame(frame)
+  return utils.renderFrame(frame, data.accountId, data.projectId)
 end)
 
 server.addJsonHandler("getFrameViews", function(from, data)

@@ -1,0 +1,26 @@
+# fly.toml app configuration file generated for frameweaver on 2024-03-20T12:45:29Z
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'frameweaver'
+primary_region = 'ams'
+
+[build]
+
+[ENV]
+  FRAMEWEAVER_PROCESS_ID = "QBy66khondqkKmSjolp6fUWIiCfHDxq3k45k8hfRcJo"
+  # FRAMEWEAVER_WALLET = **SECRET**
+
+[http_service]
+  internal_port = 3000
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ['app']
+
+[[vm]]
+  memory = '1gb'
+  cpu_kind = 'shared'
+  cpus = 1

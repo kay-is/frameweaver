@@ -1,9 +1,4 @@
-import {
-  createDataItemSigner,
-  dryrun,
-  message,
-  result,
-} from "@permaweb/aoconnect"
+import { createDataItemSigner, message, result } from "@permaweb/aoconnect"
 
 import { ArweaveWebWallet } from "arweave-wallet-connector"
 import type { FrameProjectSpec } from "./appState"
@@ -34,15 +29,6 @@ const call = async (action: string, data: any) => {
   return JSON.parse(response.Messages[0].Data)
 }
 
-const read = async (action: string, data: any) => {
-  const response = await dryrun({
-    process: FRAMEWEAVER_PROCESS_ID,
-    tags: [{ name: "Action", value: action }],
-    data: JSON.stringify(data),
-  })
-  return JSON.parse(response.Messages[0].Data)
-}
-
 export const connectWallet = async () => {
   await wallet.connect([
     "ACCESS_ADDRESS",
@@ -58,7 +44,7 @@ export const updateProject = async (project: FrameProjectSpec) => {
   console.log("Updating project...")
   console.log(project)
   const data = await call("updateProject", project)
-  project.deployed = true
+  project.deployed = Date.now()
   console.log("Done!")
   return data
 }

@@ -31,6 +31,7 @@ export function ImageUploadPage() {
       const jwk = await arweave.crypto.generateJWK()
       const turbo = TurboFactory.authenticated({ privateKey: jwk })
       const uploadResult = await turbo.uploadFile({
+        //@ts-expect-error assigned
         fileStreamFactory: () => files[0].stream(),
         fileSizeFactory: () => files[0].size,
       })

@@ -40,6 +40,7 @@ export const useWallet = () => {
   useEffect(() => {
     const f = async () => {
       const wallet = await connectWallet()
+      //@ts-expect-error assigned
       const address = await wallet.getActiveAddress()
       setWallet(address)
     }

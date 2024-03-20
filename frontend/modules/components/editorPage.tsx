@@ -205,7 +205,7 @@ const FrameButtonItem = (props: FrameButtonItemProps) => {
             value={props.button.target}
             className="select select-bordered w-full"
             onChange={(e) => {
-              console.log(e.target.value)
+              //@ts-expect-error assigned
               props.button.target = e.target.value
             }}
           >
